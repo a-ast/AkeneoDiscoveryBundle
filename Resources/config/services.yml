@@ -1,0 +1,5 @@
+services:
+    aa_discovery.expression_to_ast_converter:
+        class: Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\ExpressionToAstConverter
+        arguments:
+            - '@pim_catalog.query.filter.product_registry'

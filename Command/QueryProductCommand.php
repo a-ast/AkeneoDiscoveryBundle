@@ -30,7 +30,12 @@ class QueryProductCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        var_dump($ast);
+        $converter = $this->getContainer()->get('aa_discovery.expression_to_ast_converter');
+
+        $astNode = $converter->convert('sku > 123 and sku != 888');
+        // $converter->dump();
+
+        var_dump($astNode);
     }
 
 }

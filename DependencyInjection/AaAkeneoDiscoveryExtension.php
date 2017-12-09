@@ -14,10 +14,7 @@ class AaAkeneoDiscoveryExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-       $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-//        $loader->load('entities.yml');
-//        $loader->load('savers.yml');
-//        $loader->load('widgets.yml');
-//        $loader->load('providers.yml');
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('services.yml');
     }
 }
