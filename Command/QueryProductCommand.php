@@ -11,18 +11,17 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
 
 class QueryProductCommand extends ContainerAwareCommand
 {
-
     protected function configure()
     {
 
         $this
             ->setName('aa:product:query')
-            ->setDescription('Query products');
+            ->setDescription('Query products')
+            ->addArgument('expression', InputArgument::REQUIRED);
     }
 
     /**
@@ -30,10 +29,11 @@ class QueryProductCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $converter = $this->getContainer()->get('aa_discovery.expression_to_ast_converter');
+        $converter = $this->getContainer()->get('aa_discovery.query.expression_to_ast_converter');
 
-        $astNode = $converter->convert('sku > 123 and sku != 888');
-        // $converter->dump();
+        $expression = $input->getArgument('expression');
+
+        $astNode = $converter->convert($expression);
 
         var_dump($astNode);
     }

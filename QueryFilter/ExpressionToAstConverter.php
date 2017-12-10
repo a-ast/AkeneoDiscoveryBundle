@@ -3,32 +3,34 @@
 namespace Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter;
 
 use Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\Exceptions\SyntaxErrorException;
-use Pim\Component\Catalog\Query\Filter\FilterRegistryInterface;
+use Pim\Component\Catalog\Query\Filter\Operators;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\ExpressionLanguage\SyntaxError;
 
 class ExpressionToAstConverter
 {
     /**
-     * @var FilterRegistryInterface
+     * @var ExpressionLanguage
      */
-    private $filterRegistry;
+    private $expressionLanguage;
 
-    public function __construct(FilterRegistryInterface $filterRegistry)
+    /**
+     * @var AttributeOperatorMap
+     */
+    private $attributeOperatorMap;
+
+    public function __construct(AttributeOperatorMap $attributeOperatorMap)
     {
-        $this->filterRegistry = $filterRegistry;
+        $this->attributeOperatorMap = $attributeOperatorMap;
     }
 
     public function convert(string $expression)
     {
-        $expressionLanguage = new ExpressionLanguage();
-
-        $expressionLanguage
-            ->register('contains', function() { }, function() { });
+        $this->initializeExpressionLanguage();
 
         try {
-            $ast = $expressionLanguage
-                ->parse($expression, ['sku'])
+            $ast = $this->expressionLanguage
+                ->parse($expression, $this->attributeOperatorMap->getAttributes())
                 ->getNodes();
 
         } catch (SyntaxError $e) {
@@ -40,7 +42,13 @@ class ExpressionToAstConverter
 
     public function dump()
     {
-        var_dump($this->getAllOperators());
+
+//        $operators = $this->getAllOperators();
+//        $functionNames = $this->getFunctionNames($operators);
+//        var_dump($operators);
+//        var_dump($functionNames);
+
+//        var_dump($this->getAllOperators());
 
 //        $filters = $this->getAttributeFilters();
 //
@@ -51,34 +59,46 @@ class ExpressionToAstConverter
 
     }
 
-    protected function getAttributeFilters(): array
-    {
-        $attributeFilters = [];
-        foreach ($this->filterRegistry->getAttributeFilters() as $filter) {
-            $supportedAttributes = $filter->getAttributeTypes();
 
-            if (null !== $supportedAttributes) {
-                foreach ($supportedAttributes as $attribute) {
-                    $attributeFilters[$attribute][] = $filter;
-                }
+    private function getFunctionNames(array $operators)
+    {
+        $supportedOperarors = [
+            Operators::EQUALS,
+            Operators::NOT_EQUAL,
+            Operators::LOWER_THAN,
+            Operators::LOWER_OR_EQUAL_THAN,
+            Operators::GREATER_THAN,
+            Operators::GREATER_OR_EQUAL_THAN,
+            Operators::IN_LIST,
+            Operators::NOT_IN_LIST,
+
+        ];
+
+        $functionNames = [];
+
+        foreach ($operators as $operatorName) {
+            if (in_array($operatorName, $supportedOperarors)) {
+                continue;
             }
+
+            $functionNames[] = str_replace(' ', '_', strtolower($operatorName));
         }
 
-        return $attributeFilters;
+        return $functionNames;
     }
 
-    protected function getAllOperators(): array
+    private function initializeExpressionLanguage(): void
     {
-        $operators = [];
-        foreach ($this->filterRegistry->getAttributeFilters() as $filter) {
-
-            $operators = $operators + $filter->getOperators();
-            foreach ($filter->getOperators() as $operator) {
-                $operators[$operator] = true;
-            }
+        if (null !== $this->expressionLanguage) {
+            return;
         }
 
-        return array_keys($operators);
-    }
+        $this->expressionLanguage = new ExpressionLanguage();
+        $dummyFunction = function() {};
 
+        foreach ($this->getFunctionNames($this->attributeOperatorMap->getOperators()) as $functionName) {
+            $this->expressionLanguage
+                ->register($functionName, $dummyFunction, $dummyFunction);
+        }
+    }
 }

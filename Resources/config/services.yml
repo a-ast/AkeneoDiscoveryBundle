@@ -1,5 +1,12 @@
 services:
-    aa_discovery.expression_to_ast_converter:
-        class: Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\ExpressionToAstConverter
+
+    aa_discovery.query.attribute_operator_map:
+        class: Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\AttributeOperatorMap
         arguments:
             - '@pim_catalog.query.filter.product_registry'
+            - '@pim_catalog.repository.attribute'
+
+    aa_discovery.query.expression_to_ast_converter:
+        class: Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\ExpressionToAstConverter
+        arguments:
+            - '@aa_discovery.query.attribute_operator_map'
