@@ -6,7 +6,14 @@ services:
             - '@pim_catalog.query.filter.product_registry'
             - '@pim_catalog.repository.attribute'
 
+    aa_discovery.query.expression_builder:
+        class: Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\ExpressionBuilder
+
     aa_discovery.query.expression_to_ast_converter:
         class: Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\ExpressionToAstConverter
         arguments:
             - '@aa_discovery.query.attribute_operator_map'
+            - '@aa_discovery.query.expression_builder'
+
+    aa_discovery.query.ast_to_filters_converter:
+        class: Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\AstToFiltersConverter

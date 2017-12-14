@@ -17,7 +17,6 @@ class QueryProductCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
-
         $this
             ->setName('aa:product:query')
             ->setDescription('Query products')
@@ -29,13 +28,19 @@ class QueryProductCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $converter = $this->getContainer()->get('aa_discovery.query.expression_to_ast_converter');
+        $toAstConverter = $this->getContainer()->get('aa_discovery.query.expression_to_ast_converter');
+        $fromAstConverter = $this->getContainer()->get('aa_discovery.query.ast_to_filters_converter');
 
         $expression = $input->getArgument('expression');
 
-        $astNode = $converter->convert($expression);
+        $astNode = $toAstConverter->convert($expression);
+        $filters = $fromAstConverter->convert($astNode);
 
-        var_dump($astNode);
+        //$astNode->dump();
+
+        foreach ($filters as $filter) {
+            $output->writeln($filter);
+        }
     }
 
 }

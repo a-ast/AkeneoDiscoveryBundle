@@ -45,8 +45,6 @@ class AttributeOperatorMapSpec extends ObjectBehavior
         $attributeRepository->findAll()->willReturn([$attribute1, $attribute2, $attribute3]);
 
         $this->beConstructedWith($filterRegistry, $attributeRepository);
-
-
     }
 
     function it_is_initializable()
