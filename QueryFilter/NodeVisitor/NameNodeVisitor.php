@@ -16,7 +16,7 @@ class NameNodeVisitor implements SimpleNodeVisitorInterface
         $this->node = $node;
     }
 
-    public function getValue(): string
+    public function getValue()
     {
         return $this->node->attributes['name'];
     }

@@ -2,6 +2,7 @@
 
 namespace Aa\Bundle\AkeneoQueryBundle\QueryFilter\NodeVisitor;
 
+use Symfony\Component\ExpressionLanguage\Node\ArrayNode;
 use Symfony\Component\ExpressionLanguage\Node\BinaryNode;
 use Symfony\Component\ExpressionLanguage\Node\ConstantNode;
 use Symfony\Component\ExpressionLanguage\Node\FunctionNode;
@@ -26,6 +27,10 @@ class NodeVisitorFactory
 
         if ($node instanceof ConstantNode) {
             return new ConstantNodeVisitor($node);
+        }
+
+        if ($node instanceof ArrayNode) {
+            return new ArrayNodeVisitor($node);
         }
     }
 }

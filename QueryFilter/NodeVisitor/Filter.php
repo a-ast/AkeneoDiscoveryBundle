@@ -23,7 +23,7 @@ class Filter
      */
     private $context;
 
-    public function __construct(string $field, ?string $value, string $operator, string $context)
+    public function __construct(string $field, $value, string $operator, string $context)
     {
         $this->field = $field;
         $this->value = $value;
@@ -36,7 +36,7 @@ class Filter
         return $this->field;
     }
 
-    public function getValue(): ?string
+    public function getValue()
     {
         return $this->value;
     }
@@ -48,6 +48,6 @@ class Filter
 
     public function __toString(): string
     {
-        return sprintf('%s %s %s', $this->field, $this->operator, $this->value);
+        return sprintf('%s %s %s', $this->field, $this->operator, is_array($this->value) ? join(',', $this->value) : $this->value);
     }
 }
