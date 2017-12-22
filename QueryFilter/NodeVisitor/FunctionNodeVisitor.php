@@ -35,9 +35,4 @@ class FunctionNodeVisitor implements FilterNodeVisitorInterface
     {
         return $this->node->attributes['name'];
     }
-
-    public function validate()
-    {
-        // TODO: Implement validate() method.
-    }
 }

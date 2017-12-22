@@ -20,9 +20,4 @@ class NameNodeVisitor implements SimpleNodeVisitorInterface
     {
         return $this->node->attributes['name'];
     }
-
-    public function validate()
-    {
-        // TODO: Implement validate() method.
-    }
 }

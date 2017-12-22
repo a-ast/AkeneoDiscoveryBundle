@@ -20,9 +20,4 @@ class ConstantNodeVisitor implements SimpleNodeVisitorInterface
     {
         return $this->node->attributes['value'];
     }
-
-    public function validate()
-    {
-        // TODO: Implement validate() method.
-    }
 }

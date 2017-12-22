@@ -31,9 +31,4 @@ class BinaryNodeVisitor implements FilterNodeVisitorInterface
     {
         return $this->node->attributes['operator'];
     }
-
-    public function validate()
-    {
-        // TODO: Implement validate() method.
-    }
 }
