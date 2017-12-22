@@ -1,5 +1,5 @@
 <?php
-namespace Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\NodeVisitor;
+namespace Aa\Bundle\AkeneoQueryBundle\QueryFilter\NodeVisitor;
 
 use Symfony\Component\ExpressionLanguage\Node\Node;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter;
+namespace Aa\Bundle\AkeneoQueryBundle\QueryFilter;
 
 class ExpressionToAstConverter
 {

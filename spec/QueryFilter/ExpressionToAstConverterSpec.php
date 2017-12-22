@@ -1,9 +1,9 @@
 <?php
 
-namespace spec\Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter;
+namespace spec\Aa\Bundle\AkeneoQueryBundle\QueryFilter;
 
-use Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\AttributeOperatorMap;
-use Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\ExpressionToAstConverter;
+use Aa\Bundle\AkeneoQueryBundle\QueryFilter\AttributeOperatorMap;
+use Aa\Bundle\AkeneoQueryBundle\QueryFilter\ExpressionToAstConverter;
 use PhpSpec\ObjectBehavior;
 use Pim\Component\Catalog\Query\Filter\FilterRegistryInterface;
 use Prophecy\Argument;
@@ -31,6 +31,6 @@ class ExpressionToAstConverterSpec extends ObjectBehavior
 
     function it_throws_exception_if_expreesion_has_syntax_error()
     {
-        $this->shouldThrow('Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\Exceptions\SyntaxErrorException')->during('convert', ['sku = 123']);
+        $this->shouldThrow('Aa\Bundle\AkeneoQueryBundle\QueryFilter\Exceptions\SyntaxErrorException')->during('convert', ['sku = 123']);
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace spec\Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\NodeVisitor;
+namespace spec\Aa\Bundle\AkeneoQueryBundle\QueryFilter\NodeVisitor;
 
-use Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\NodeVisitor\NameNodeVisitor;
-use Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\NodeVisitor\NodeVisitorFactory;
+use Aa\Bundle\AkeneoQueryBundle\QueryFilter\NodeVisitor\NameNodeVisitor;
+use Aa\Bundle\AkeneoQueryBundle\QueryFilter\NodeVisitor\NodeVisitorFactory;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\ExpressionLanguage\Node\NameNode;

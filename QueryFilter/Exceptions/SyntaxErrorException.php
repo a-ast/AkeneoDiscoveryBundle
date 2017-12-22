@@ -1,6 +1,6 @@
 <?php
 
-namespace Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\Exceptions;
+namespace Aa\Bundle\AkeneoQueryBundle\QueryFilter\Exceptions;
 
 use Exception;
 

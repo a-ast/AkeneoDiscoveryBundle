@@ -1,8 +1,8 @@
 <?php
 
-namespace Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter;
+namespace Aa\Bundle\AkeneoQueryBundle\QueryFilter;
 
-use Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\Exceptions\SyntaxErrorException;
+use Aa\Bundle\AkeneoQueryBundle\QueryFilter\Exceptions\SyntaxErrorException;
 use Pim\Component\Catalog\Query\Filter\Operators;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\ExpressionLanguage\ParsedExpression;

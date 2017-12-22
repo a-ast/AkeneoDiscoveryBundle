@@ -1,6 +1,6 @@
 <?php
 
-namespace Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\NodeVisitor;
+namespace Aa\Bundle\AkeneoQueryBundle\QueryFilter\NodeVisitor;
 
 class Filter
 {

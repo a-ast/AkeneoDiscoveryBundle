@@ -1,8 +1,8 @@
 <?php
 
-namespace spec\Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\NodeVisitor;
+namespace spec\Aa\Bundle\AkeneoQueryBundle\QueryFilter\NodeVisitor;
 
-use Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\NodeVisitor\BinaryNodeVisitor;
+use Aa\Bundle\AkeneoQueryBundle\QueryFilter\NodeVisitor\BinaryNodeVisitor;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\ExpressionLanguage\Node\BinaryNode;

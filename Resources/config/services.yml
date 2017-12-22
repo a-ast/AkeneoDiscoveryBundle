@@ -1,25 +1,25 @@
 services:
 
     aa_discovery.query.attribute_operator_map:
-        class: Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\AttributeOperatorMap
+        class: Aa\Bundle\AkeneoQueryBundle\QueryFilter\AttributeOperatorMap
         arguments:
             - '@pim_catalog.query.filter.product_registry'
             - '@pim_catalog.repository.attribute'
 
     aa_discovery.query.expression_builder:
-        class: Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\ExpressionBuilder
+        class: Aa\Bundle\AkeneoQueryBundle\QueryFilter\ExpressionBuilder
 
     aa_discovery.query.expression_to_ast_converter:
-        class: Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\ExpressionToAstConverter
+        class: Aa\Bundle\AkeneoQueryBundle\QueryFilter\ExpressionToAstConverter
         arguments:
             - '@aa_discovery.query.attribute_operator_map'
             - '@aa_discovery.query.expression_builder'
 
     aa_discovery.query.node_visitor.factory:
-        class: Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\NodeVisitor\NodeVisitorFactory
+        class: Aa\Bundle\AkeneoQueryBundle\QueryFilter\NodeVisitor\NodeVisitorFactory
 
 
     aa_discovery.query.ast_to_filters_converter:
-        class: Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\AstToFiltersConverter
+        class: Aa\Bundle\AkeneoQueryBundle\QueryFilter\AstToFiltersConverter
         arguments:
            - '@aa_discovery.query.node_visitor.factory'

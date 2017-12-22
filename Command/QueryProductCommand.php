@@ -1,6 +1,6 @@
 <?php
 
-namespace Aa\Bundle\AkeneoDiscoveryBundle\Command;
+namespace Aa\Bundle\AkeneoQueryBundle\Command;
 
 use Akeneo\Component\StorageUtils\Cursor\CursorInterface;
 use Pim\Component\Catalog\Query\ProductQueryBuilderInterface;

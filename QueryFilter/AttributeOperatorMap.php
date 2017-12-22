@@ -1,6 +1,6 @@
 <?php
 
-namespace Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter;
+namespace Aa\Bundle\AkeneoQueryBundle\QueryFilter;
 
 use Pim\Component\Catalog\Query\Filter\FilterRegistryInterface;
 use Pim\Component\Catalog\Repository\AttributeRepositoryInterface;

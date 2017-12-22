@@ -1,11 +1,11 @@
 <?php
 
-namespace Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter;
+namespace Aa\Bundle\AkeneoQueryBundle\QueryFilter;
 
-use Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\NodeVisitor\Filter;
-use Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\NodeVisitor\FilterNodeVisitorInterface;
-use Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\NodeVisitor\NodeVisitorFactory;
-use Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\NodeVisitor\SimpleNodeVisitorInterface;
+use Aa\Bundle\AkeneoQueryBundle\QueryFilter\NodeVisitor\Filter;
+use Aa\Bundle\AkeneoQueryBundle\QueryFilter\NodeVisitor\FilterNodeVisitorInterface;
+use Aa\Bundle\AkeneoQueryBundle\QueryFilter\NodeVisitor\NodeVisitorFactory;
+use Aa\Bundle\AkeneoQueryBundle\QueryFilter\NodeVisitor\SimpleNodeVisitorInterface;
 use ArrayObject;
 use Symfony\Component\ExpressionLanguage\Node\Node;
 

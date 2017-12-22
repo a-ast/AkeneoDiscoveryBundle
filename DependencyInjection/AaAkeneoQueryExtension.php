@@ -1,13 +1,13 @@
 <?php
 
-namespace Aa\Bundle\AkeneoDiscoveryBundle\DependencyInjection;
+namespace Aa\Bundle\AkeneoQueryBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-class AaAkeneoDiscoveryExtension extends Extension
+class AaAkeneoQueryExtension extends Extension
 {
     /**
      * {@inheritDoc}

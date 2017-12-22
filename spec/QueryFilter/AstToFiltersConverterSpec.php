@@ -1,8 +1,8 @@
 <?php
 
-namespace spec\Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter;
+namespace spec\Aa\Bundle\AkeneoQueryBundle\QueryFilter;
 
-use Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\AstToFiltersConverter;
+use Aa\Bundle\AkeneoQueryBundle\QueryFilter\AstToFiltersConverter;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\ExpressionLanguage\Node\Node;
@@ -16,8 +16,6 @@ class AstToFiltersConverterSpec extends ObjectBehavior
 
     function it_converts_ast_node_to_filters(Node $node)
     {
-        $node->
-
         $this->connvert($node);
     }
 }

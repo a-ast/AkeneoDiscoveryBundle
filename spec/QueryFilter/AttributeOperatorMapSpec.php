@@ -1,8 +1,8 @@
 <?php
 
-namespace spec\Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter;
+namespace spec\Aa\Bundle\AkeneoQueryBundle\QueryFilter;
 
-use Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\AttributeOperatorMap;
+use Aa\Bundle\AkeneoQueryBundle\QueryFilter\AttributeOperatorMap;
 use PhpSpec\ObjectBehavior;
 use Pim\Component\Catalog\Model\AttributeInterface;
 use Pim\Component\Catalog\Query\Filter\AttributeFilterInterface;
