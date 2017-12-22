@@ -15,5 +15,11 @@ services:
             - '@aa_discovery.query.attribute_operator_map'
             - '@aa_discovery.query.expression_builder'
 
+    aa_discovery.query.node_visitor.factory:
+        class: Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\NodeVisitor\NodeVisitorFactory
+
+
     aa_discovery.query.ast_to_filters_converter:
         class: Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\AstToFiltersConverter
+        arguments:
+           - '@aa_discovery.query.node_visitor.factory'

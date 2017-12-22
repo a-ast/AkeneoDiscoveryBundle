@@ -36,10 +36,8 @@ class QueryProductCommand extends ContainerAwareCommand
         $astNode = $toAstConverter->convert($expression);
         $filters = $fromAstConverter->convert($astNode);
 
-        //$astNode->dump();
-
         foreach ($filters as $filter) {
-            $output->writeln($filter);
+            $output->writeln((string)$filter);
         }
     }
 

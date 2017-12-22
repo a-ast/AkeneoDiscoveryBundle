@@ -1,6 +1,11 @@
 # ToDo
 
-1. Register functions (except basics like =)
-1. Register attributes (incl scope and locale)
-1. Register fields
-1. Implement Node converter to filter list.
+1. Rename bundle to 
+    * AkeneoQueryProductBundle
+    * AkeneoSimpleQueryBundle
+    * AkeneoQueryBundle
+1. Implement query-help command
+1. Implement qyurying products
+1. Implement scopable, localizable
+1. Tests
+1. Implement select fields

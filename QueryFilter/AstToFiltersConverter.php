@@ -2,32 +2,62 @@
 
 namespace Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter;
 
-use Symfony\Component\ExpressionLanguage\Node\BinaryNode;
+use Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\NodeVisitor\Filter;
+use Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\NodeVisitor\FilterNodeVisitorInterface;
+use Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\NodeVisitor\NodeVisitorFactory;
+use Aa\Bundle\AkeneoDiscoveryBundle\QueryFilter\NodeVisitor\SimpleNodeVisitorInterface;
+use ArrayObject;
 use Symfony\Component\ExpressionLanguage\Node\Node;
 
 class AstToFiltersConverter
 {
+    /**
+     * @var NodeVisitorFactory
+     */
+    private $factory;
+
+    public function __construct(NodeVisitorFactory $nodeVisitorFactory)
+    {
+        $this->factory = $nodeVisitorFactory;
+    }
+
     public function convert(Node $node)
     {
-        // @todo: return filters in this format
-        // $pqb->addFilter($filter['field'], $filter['operator'], $filter['value'], $filter['context']);
+        $filters = new ArrayObject();
 
-        $filters = [];
-
-        $this->convertRecursive($node, '', $filters);
+        $this->iterateNodes($node, $filters);
 
         return $filters;
     }
 
-    private function convertRecursive(Node $node, $shift = '', array &$filters)
+    private function iterateNodes(?Node $node, ArrayObject $filters)
     {
-        $filters[] = $shift . get_class($node);
-
-//      @todo:  if ($node instanceof BinaryNode)
-
-        foreach ($node->nodes as $child) {
-
-            $this->convertRecursive($child, $shift . '  ', $filters);
+        if (null === $node) {
+            return null;
         }
+
+        $visitor = $this->getVisitorByNode($node);
+
+        if ($visitor instanceof SimpleNodeVisitorInterface) {
+            return $visitor->getValue();
+        }
+
+        if ($visitor instanceof FilterNodeVisitorInterface) {
+
+            $field = $this->iterateNodes($visitor->getFieldNode(), $filters);
+            $value = $this->iterateNodes($visitor->getValueNode(), $filters);
+
+            if (null === $field) {
+                return null;
+            }
+
+            $filters[] = new Filter($field, $value, $visitor->getOperator(), '');
+
+        }
+    }
+
+    private function getVisitorByNode(Node $node)
+    {
+        return $this->factory->createVisitor($node);
     }
 }
