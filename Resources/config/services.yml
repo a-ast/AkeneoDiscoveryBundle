@@ -18,7 +18,6 @@ services:
     aa_discovery.query.node_visitor.factory:
         class: Aa\Bundle\AkeneoQueryBundle\QueryFilter\NodeVisitor\NodeVisitorFactory
 
-
     aa_discovery.query.ast_to_filters_converter:
         class: Aa\Bundle\AkeneoQueryBundle\QueryFilter\AstToFiltersConverter
         arguments:

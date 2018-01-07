@@ -52,7 +52,6 @@ class AstToFiltersConverter
             }
 
             $filters[] = new Filter($field, $value, $visitor->getOperator(), '');
-
         }
     }
 
