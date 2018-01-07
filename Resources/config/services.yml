@@ -6,6 +6,11 @@ services:
             - '@pim_catalog.query.filter.product_registry'
             - '@pim_catalog.repository.attribute'
 
+    aa_discovery.query.operator_to_function:
+        class: Aa\Bundle\AkeneoQueryBundle\QueryFilter\OperatorToFunction
+        arguments:
+            - '@aa_discovery.query.attribute_operator_map'
+
     aa_discovery.query.expression_builder:
         class: Aa\Bundle\AkeneoQueryBundle\QueryFilter\ExpressionBuilder
 
@@ -13,6 +18,7 @@ services:
         class: Aa\Bundle\AkeneoQueryBundle\QueryFilter\ExpressionToAstConverter
         arguments:
             - '@aa_discovery.query.attribute_operator_map'
+            - '@aa_discovery.query.operator_to_function'
             - '@aa_discovery.query.expression_builder'
 
     aa_discovery.query.node_visitor.factory:

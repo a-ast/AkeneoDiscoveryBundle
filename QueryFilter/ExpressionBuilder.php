@@ -20,9 +20,9 @@ class ExpressionBuilder
         $this->expressionLanguage = new ExpressionLanguage();
     }
 
-    public function build(string $expression, array $operators, array $attributes): ParsedExpression
+    public function build(string $expression, array $functions, array $attributes): ParsedExpression
     {
-        $this->registerFunctions($operators);
+        $this->registerFunctions($functions);
 
         try {
             $expression = $this->expressionLanguage
@@ -35,40 +35,13 @@ class ExpressionBuilder
         return $expression;
     }
 
-    private function registerFunctions(array $operators)
+    private function registerFunctions(array $functions)
     {
         $dummyFunction = function() {};
 
-        foreach ($this->getFunctionNames($operators) as $functionName) {
+        foreach ($functions as $functionName) {
             $this->expressionLanguage
                 ->register($functionName, $dummyFunction, $dummyFunction);
         }
-    }
-
-    private function getFunctionNames(array $operators)
-    {
-        $supportedOperarors = [
-            Operators::EQUALS,
-            Operators::NOT_EQUAL,
-            Operators::LOWER_THAN,
-            Operators::LOWER_OR_EQUAL_THAN,
-            Operators::GREATER_THAN,
-            Operators::GREATER_OR_EQUAL_THAN,
-            Operators::IN_LIST,
-            Operators::NOT_IN_LIST,
-
-        ];
-
-        $functionNames = [];
-
-        foreach ($operators as $operatorName) {
-            if (in_array($operatorName, $supportedOperarors)) {
-                continue;
-            }
-
-            $functionNames[] = str_replace(' ', '_', strtolower($operatorName));
-        }
-
-        return $functionNames;
     }
 }
