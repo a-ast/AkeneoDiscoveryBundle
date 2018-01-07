@@ -42,4 +42,10 @@ class QueryProductCommand extends ContainerAwareCommand
         }
     }
 
+    protected function getProductQueryBuilder(array $filters)
+    {
+        $factory = $this->getContainer()->get('pim_catalog.query.product_query_builder_factory');
+
+        return $factory->create(['filters' => $filters]);
+    }
 }
