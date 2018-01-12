@@ -2,7 +2,7 @@
 
 namespace Aa\Bundle\AkeneoQueryBundle\QueryFilter;
 
-use Aa\Bundle\AkeneoQueryBundle\QueryFilter\NodeVisitor\Filter;
+use Aa\Bundle\AkeneoQueryBundle\Filter\FilterFactory;
 use Aa\Bundle\AkeneoQueryBundle\QueryFilter\NodeVisitor\FilterNodeVisitorInterface;
 use Aa\Bundle\AkeneoQueryBundle\QueryFilter\NodeVisitor\NodeVisitorFactory;
 use Aa\Bundle\AkeneoQueryBundle\QueryFilter\NodeVisitor\SimpleNodeVisitorInterface;
@@ -15,10 +15,15 @@ class AstToFiltersConverter
      * @var NodeVisitorFactory
      */
     private $factory;
+    /**
+     * @var FilterFactory
+     */
+    private $filterFactory;
 
-    public function __construct(NodeVisitorFactory $nodeVisitorFactory)
+    public function __construct(NodeVisitorFactory $nodeVisitorFactory, FilterFactory $filterFactory)
     {
         $this->factory = $nodeVisitorFactory;
+        $this->filterFactory = $filterFactory;
     }
 
     public function convert(Node $node)
@@ -51,7 +56,7 @@ class AstToFiltersConverter
                 return null;
             }
 
-            $filters[] = new Filter($field, $value, $visitor->getOperator(), '');
+            $filters[] = $this->filterFactory->create($field, $value, $visitor->getOperator(), '');
         }
     }
 

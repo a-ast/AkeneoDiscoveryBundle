@@ -11,6 +11,11 @@ services:
         arguments:
             - '@aa_discovery.query.attribute_operator_map'
 
+    aa_discovery.query.filter_factory:
+        class: Aa\Bundle\AkeneoQueryBundle\Filter\FilterFactory
+        arguments:
+            - '@aa_discovery.query.operator_to_function'
+
     aa_discovery.query.expression_builder:
         class: Aa\Bundle\AkeneoQueryBundle\QueryFilter\ExpressionBuilder
 
@@ -28,3 +33,4 @@ services:
         class: Aa\Bundle\AkeneoQueryBundle\QueryFilter\AstToFiltersConverter
         arguments:
            - '@aa_discovery.query.node_visitor.factory'
+           - '@aa_discovery.query.filter_factory'

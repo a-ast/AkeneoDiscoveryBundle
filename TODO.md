@@ -5,4 +5,5 @@
 1. Implement qyurying products
 1. Implement scopable, localizable
 1. Tests
+1. Rename services, restructure folders
 1. Implement select fields

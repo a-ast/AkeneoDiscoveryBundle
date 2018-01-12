@@ -1,6 +1,6 @@
 <?php
 
-namespace Aa\Bundle\AkeneoQueryBundle\QueryFilter\NodeVisitor;
+namespace Aa\Bundle\AkeneoQueryBundle\Filter;
 
 class Filter
 {
@@ -18,6 +18,7 @@ class Filter
      * @var string
      */
     private $operator;
+
     /**
      * @var string
      */
