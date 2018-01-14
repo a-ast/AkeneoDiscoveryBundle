@@ -37,7 +37,6 @@ class OperatorToFunction
     {
         $this->initialize();
 
-
         $functionOperator = array_search($expressionOperator, $this->functionNames);
 
         if (false !== $functionOperator) {
