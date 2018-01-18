@@ -25,6 +25,9 @@ class AttributeOperatorMap
         $this->attributeRepository = $attributeRepository;
     }
 
+    /**
+     * @todo build list of operators by building list of attributes
+     */
     public function getOperators(): array
     {
         $operators = [];
