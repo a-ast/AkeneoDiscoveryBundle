@@ -16,11 +16,11 @@ class AttributePairCollection
         $this->items = new ArrayObject();
     }
 
-    public function add(PimAttribute $pimAttribute, ExpressionAttribute $expressionAttribute)
+    public function add(PimAttribute $pimAttribute, array $expressionAttributes)
     {
         $this->items[$pimAttribute->getName()] = [
             $pimAttribute,
-            $expressionAttribute,
+            $expressionAttributes,
         ];
     }
 }

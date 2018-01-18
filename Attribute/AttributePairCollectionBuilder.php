@@ -23,33 +23,39 @@ class AttributePairCollectionBuilder
      */
     private $pimAttributeFactory;
 
+    /**
+     * @var ExpressionAttributeFactory
+     */
+    private $expressionAttributeFactory;
+
     public function __construct(
         FilterRegistryInterface $filterRegistry,
         AttributeRepositoryInterface $attributeRepository,
-        PimAttributeFactory $pimAttributeFactory
+        PimAttributeFactory $pimAttributeFactory,
+        ExpressionAttributeFactory $expressionAttributeFactory
     ) {
         $this->filterRegistry = $filterRegistry;
         $this->attributeRepository = $attributeRepository;
         $this->pimAttributeFactory = $pimAttributeFactory;
+        $this->expressionAttributeFactory = $expressionAttributeFactory;
     }
 
-    public function build(AttributePairCollection $collection)
+    public function build()
     {
+        $collection = new AttributePairCollection();
+
         $attributeTypeFilters = $this->getAttributeTypeFilters();
         $attributes = $this->attributeRepository->findAll();
 
-        $rows = [];
         foreach ($attributes as $attribute) {
             $pimAttributes = $this->getPimAttributes($attribute, $attributeTypeFilters);
 
             foreach ($pimAttributes as $pimAttribute) {
-                $collection->add($pimAttribute,
-                    new ExpressionAttribute('', [])
-                    );
+
+                $expressionAttributes = $this->expressionAttributeFactory->createAttributesFromPimAttribute($pimAttribute);
+                $collection->add($pimAttribute, $expressionAttributes);
             }
         }
-
-        return $rows;
     }
 
     /**
@@ -79,7 +85,6 @@ class AttributePairCollectionBuilder
             return $pimAttributes;
         }
     }
-
 
     private function getAttributeTypeFilters(): array
     {
