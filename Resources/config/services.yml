@@ -24,9 +24,9 @@ services:
     aa_discovery.query.expression_to_ast_converter:
         class: Aa\Bundle\AkeneoQueryBundle\QueryFilter\ExpressionToAstConverter
         arguments:
-            - '@aa_discovery.query.attribute_operator_map'
             - '@aa_discovery.query.operator_to_function'
             - '@aa_discovery.query.expression_builder'
+            - '@aa_query.attribute.collection_builder'
 
     aa_discovery.query.node_visitor.factory:
         class: Aa\Bundle\AkeneoQueryBundle\QueryFilter\NodeVisitor\NodeVisitorFactory

@@ -2,13 +2,10 @@
 
 namespace Aa\Bundle\AkeneoQueryBundle\QueryFilter;
 
+use Aa\Bundle\AkeneoQueryBundle\Attribute\AttributePairCollectionBuilder;
+
 class ExpressionToAstConverter
 {
-    /**
-     * @var AttributeOperatorMap
-     */
-    private $attributeOperatorMap;
-
     /**
      * @var ExpressionBuilder
      */
@@ -19,18 +16,29 @@ class ExpressionToAstConverter
      */
     private $operatorToFunction;
 
-    public function __construct(AttributeOperatorMap $attributeOperatorMap, OperatorToFunction $operatorToFunction, ExpressionBuilder $expressionBuilder)
+    /**
+     * @var AttributePairCollectionBuilder
+     */
+    private $attributePairCollectionBuilder;
+
+    public function __construct(
+        OperatorToFunction $operatorToFunction,
+        ExpressionBuilder $expressionBuilder,
+        AttributePairCollectionBuilder $attributePairCollectionBuilder
+    )
     {
-        $this->attributeOperatorMap = $attributeOperatorMap;
         $this->expressionBuilder = $expressionBuilder;
         $this->operatorToFunction = $operatorToFunction;
+        $this->attributePairCollectionBuilder = $attributePairCollectionBuilder;
     }
 
     public function convert(string $expression)
     {
+        $collection = $this->attributePairCollectionBuilder->build();
+
         $expression = $this->expressionBuilder->build($expression,
             $this->operatorToFunction->getExpressionFunctionNames(),
-            $this->attributeOperatorMap->getAttributes());
+            $collection->getExpressionAttributeNames());
 
         return $expression->getNodes();
     }
