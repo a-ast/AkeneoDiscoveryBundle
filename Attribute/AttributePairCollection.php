@@ -23,4 +23,20 @@ class AttributePairCollection
             $expressionAttributes,
         ];
     }
+
+    /**
+     * @return ExpressionAttribute[]
+     */
+    public function getExpressionAttributes(): array
+    {
+        $attributes = [];
+
+        foreach ($this->items as $item) {
+            $attributes = array_merge($attributes, $item[1]);
+        }
+
+        return $attributes;
+    }
+
+    // @todo: getExpressionOperators/Functions
 }

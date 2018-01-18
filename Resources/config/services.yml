@@ -1,11 +1,13 @@
 services:
 
+    # deprecated
     aa_discovery.query.attribute_operator_map:
         class: Aa\Bundle\AkeneoQueryBundle\QueryFilter\AttributeOperatorMap
         arguments:
             - '@pim_catalog.query.filter.product_registry'
             - '@pim_catalog.repository.attribute'
 
+    # deprecated
     aa_discovery.query.operator_to_function:
         class: Aa\Bundle\AkeneoQueryBundle\QueryFilter\OperatorToFunction
         arguments:
@@ -34,3 +36,17 @@ services:
         arguments:
            - '@aa_discovery.query.node_visitor.factory'
            - '@aa_discovery.query.filter_factory'
+
+    aa_discovery.attribute.pim_attribute_factory:
+        class: Aa\Bundle\AkeneoQueryBundle\Attribute\PimAttributeFactory
+
+    aa_discovery.attribute.expression_attribute_factory:
+        class: Aa\Bundle\AkeneoQueryBundle\Attribute\ExpressionAttributeFactory
+
+    aa_query.attribute.collection_builder:
+        class: Aa\Bundle\AkeneoQueryBundle\Attribute\AttributePairCollectionBuilder
+        arguments:
+            - '@pim_catalog.query.filter.product_registry'
+            - '@pim_catalog.repository.attribute'
+            - '@aa_discovery.attribute.pim_attribute_factory'
+            - '@aa_discovery.attribute.expression_attribute_factory'

@@ -40,7 +40,7 @@ class AttributePairCollectionBuilder
         $this->expressionAttributeFactory = $expressionAttributeFactory;
     }
 
-    public function build()
+    public function build(): AttributePairCollection
     {
         $collection = new AttributePairCollection();
 
@@ -56,6 +56,8 @@ class AttributePairCollectionBuilder
                 $collection->add($pimAttribute, $expressionAttributes);
             }
         }
+
+        return $collection;
     }
 
     /**

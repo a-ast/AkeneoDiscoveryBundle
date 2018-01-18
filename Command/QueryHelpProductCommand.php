@@ -23,17 +23,15 @@ class QueryHelpProductCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $rows = $this->getContainer()->get('aa_discovery.query.attribute_operator_map')->getMap();
+        $attributeCollection = $this->getContainer()->get('aa_query.attribute.collection_builder')->build();
+        $attributes = $attributeCollection->getExpressionAttributes();
 
         $table = new Table($output);
-        $table->setHeaders(['Attribute', 'l', 's' ,'Operators']);
+        $table->setHeaders(['Attribute', 'Operators']);
 
-        /** @var PimAttribute $attribute */
-        foreach ($rows as $attribute) {
+        foreach ($attributes as $attribute) {
             $table->addRow([
                 $attribute->getName(),
-                $attribute->isLocalizable(),
-                $attribute->isScopable(),
                 join(PHP_EOL, $attribute->getOperators()),
             ]);
         }
