@@ -23,7 +23,6 @@ class PimAttribute
         $this->operators = $operators;
     }
 
-
     public function getName(): string
     {
         return $this->name;
@@ -47,5 +46,14 @@ class PimAttribute
     public function getOperators(): array
     {
         return $this->operators;
+    }
+
+    public function getExpressionAttributes()
+    {
+        $attributes[] = $this->getName();
+
+        if ($this->isLocalizable()) {
+            $attributes[] = $this->getName() . 'locale';
+        }
     }
 }
