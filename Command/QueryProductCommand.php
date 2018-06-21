@@ -28,13 +28,13 @@ class QueryProductCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $toAstConverter = $this->getContainer()->get('aa_discovery.query.expression_to_ast_converter');
-        $fromAstConverter = $this->getContainer()->get('aa_discovery.query.ast_to_filters_converter');
+        $textToAstConverter = $this->getContainer()->get('aa_discovery.query.expression_to_ast_converter');
+        $astToFiltersConverter = $this->getContainer()->get('aa_discovery.query.ast_to_filters_converter');
 
         $expression = $input->getArgument('expression');
 
-        $astNode = $toAstConverter->convert($expression);
-        $filters = $fromAstConverter->convert($astNode);
+        $astNode = $textToAstConverter->convert($expression);
+        $filters = $astToFiltersConverter->convert($astNode);
 
         foreach ($filters as $filter) {
             $output->writeln((string)$filter);
