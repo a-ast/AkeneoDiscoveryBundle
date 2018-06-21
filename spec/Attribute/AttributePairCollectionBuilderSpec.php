@@ -2,8 +2,8 @@
 
 namespace spec\Aa\Bundle\AkeneoQueryBundle\Attribute;
 
-use Aa\Bundle\AkeneoQueryBundle\Attribute\AttributePairCollection;
-use Aa\Bundle\AkeneoQueryBundle\Attribute\AttributePairCollectionBuilder;
+use Aa\Bundle\AkeneoQueryBundle\Attribute\AttributeCollection;
+use Aa\Bundle\AkeneoQueryBundle\Attribute\CollectionBuilder;
 use PhpSpec\ObjectBehavior;
 use Pim\Component\Catalog\Query\Filter\FilterRegistryInterface;
 use Pim\Component\Catalog\Repository\AttributeRepositoryInterface;
@@ -18,10 +18,10 @@ class AttributePairCollectionBuilderSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType(AttributePairCollectionBuilder::class);
+        $this->shouldHaveType(CollectionBuilder::class);
     }
 
-    function it_builds_the_collection(AttributePairCollection $collection)
+    function it_builds_the_collection(AttributeCollection $collection)
     {
         $this->build($collection);
     }

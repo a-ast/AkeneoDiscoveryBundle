@@ -6,7 +6,7 @@ use Pim\Component\Catalog\Model\AttributeInterface;
 use Pim\Component\Catalog\Query\Filter\FilterRegistryInterface;
 use Pim\Component\Catalog\Repository\AttributeRepositoryInterface;
 
-class AttributePairCollectionBuilder
+class CollectionBuilder
 {
     /**
      * @var FilterRegistryInterface
@@ -19,57 +19,63 @@ class AttributePairCollectionBuilder
     private $attributeRepository;
 
     /**
-     * @var PimAttributeFactory
+     * @var AttributeFactory
      */
-    private $pimAttributeFactory;
+    private $attributeFactory;
 
     /**
-     * @var ExpressionAttributeFactory
+     * @var AttributeCollection
      */
-    private $expressionAttributeFactory;
+    private $attributes;
+
+    /**
+     * @var OperatorCollection
+     */
+    private $operators;
 
     public function __construct(
         FilterRegistryInterface $filterRegistry,
         AttributeRepositoryInterface $attributeRepository,
-        PimAttributeFactory $pimAttributeFactory,
-        ExpressionAttributeFactory $expressionAttributeFactory
+        AttributeFactory $attributeFactory
     ) {
         $this->filterRegistry = $filterRegistry;
         $this->attributeRepository = $attributeRepository;
-        $this->pimAttributeFactory = $pimAttributeFactory;
-        $this->expressionAttributeFactory = $expressionAttributeFactory;
+        $this->attributeFactory = $attributeFactory;
+        $this->attributes = new AttributeCollection();
+        $this->operators = new OperatorCollection();
     }
 
-    public function build(): AttributePairCollection
+    public function build()
     {
-        $collection = new AttributePairCollection();
-
-        $attributeTypeFilters = $this->getAttributeTypeFilters();
         $attributes = $this->attributeRepository->findAll();
 
         foreach ($attributes as $attribute) {
-            $pimAttributes = $this->getPimAttributes($attribute, $attributeTypeFilters);
+            $pimAttributes = $this->getPimAttributes($attribute);
 
             foreach ($pimAttributes as $pimAttribute) {
 
-                $expressionAttributes = $this->expressionAttributeFactory->createAttributesFromPimAttribute($pimAttribute);
-                $collection->add($pimAttribute, $expressionAttributes);
+                $this->attributes->add($pimAttribute);
+
+                foreach ($pimAttribute->getOperators() as $operator) {
+                    $this->operators->add($operator);
+                }
+
             }
         }
-
-        return $collection;
     }
 
     /**
-     * @return PimAttribute[]
+     * @return Attribute[]
      */
-    protected function getPimAttributes(AttributeInterface $attribute, array $attributeTypeFilters): array
+    private function getPimAttributes(AttributeInterface $attribute): array
     {
         $pimAttributes = [];
 
+        $attributeTypeFilters = $this->getAttributeTypeFilters();
+
         if (array_key_exists($attribute->getType(), $attributeTypeFilters)) {
             foreach ($attributeTypeFilters[$attribute->getType()] as $filter) {
-                $pimAttributes[] = $this->pimAttributeFactory->create($attribute, $filter);
+                $pimAttributes[] = $this->attributeFactory->create($attribute, $filter);
             }
 
             return $pimAttributes;
@@ -81,7 +87,7 @@ class AttributePairCollectionBuilder
                     continue;
                 }
 
-                $pimAttributes[] = $this->pimAttributeFactory->create($attribute, $filter);
+                $pimAttributes[] = $this->attributeFactory->create($attribute, $filter);
             }
 
             return $pimAttributes;
@@ -105,5 +111,15 @@ class AttributePairCollectionBuilder
         }
 
         return $attributeFilters;
+    }
+
+    public function getAttributes(): AttributeCollection
+    {
+        return $this->attributes;
+    }
+
+    public function getOperators(): OperatorCollection
+    {
+        return $this->operators;
     }
 }

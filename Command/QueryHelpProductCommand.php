@@ -2,7 +2,7 @@
 
 namespace Aa\Bundle\AkeneoQueryBundle\Command;
 
-use Aa\Bundle\AkeneoQueryBundle\Attribute\PimAttribute;
+use Aa\Bundle\AkeneoQueryBundle\Attribute\Attribute;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
@@ -23,8 +23,10 @@ class QueryHelpProductCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $attributeCollection = $this->getContainer()->get('aa_query.attribute.collection_builder')->build();
-        $attributes = $attributeCollection->getExpressionAttributes();
+        $this->getContainer()->get('aa_query.attribute.collection_builder')->build();
+
+        $attributeCollection = $this->getContainer()->get('aa_query.attribute.collection');
+        $attributes = $attributeCollection->getAttributes();
 
         $table = new Table($output);
         $table->setHeaders(['Attribute', 'Operators']);

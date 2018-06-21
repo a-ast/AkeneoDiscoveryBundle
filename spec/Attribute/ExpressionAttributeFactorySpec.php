@@ -3,7 +3,7 @@
 namespace spec\Aa\Bundle\AkeneoQueryBundle\Attribute;
 
 use Aa\Bundle\AkeneoQueryBundle\Attribute\ExpressionAttributeFactory;
-use Aa\Bundle\AkeneoQueryBundle\Attribute\PimAttribute;
+use Aa\Bundle\AkeneoQueryBundle\Attribute\Attribute;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -14,7 +14,7 @@ class ExpressionAttributeFactorySpec extends ObjectBehavior
         $this->shouldHaveType(ExpressionAttributeFactory::class);
     }
 
-    function it_creates_expression_attribute(PimAttribute $pimAttribute)
+    function it_creates_expression_attribute(Attribute $pimAttribute)
     {
         $pimAttribute->getName()->willReturn('color');
         $pimAttribute->getOperators()->willReturn(['=']);

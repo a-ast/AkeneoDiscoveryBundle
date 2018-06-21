@@ -2,7 +2,7 @@
 
 namespace Aa\Bundle\AkeneoQueryBundle\QueryFilter;
 
-use Aa\Bundle\AkeneoQueryBundle\Attribute\AttributePairCollectionBuilder;
+use Aa\Bundle\AkeneoQueryBundle\Attribute\CollectionBuilder;
 
 class ExpressionToAstConverter
 {
@@ -17,28 +17,30 @@ class ExpressionToAstConverter
     private $operatorToFunction;
 
     /**
-     * @var AttributePairCollectionBuilder
+     * @var CollectionBuilder
      */
-    private $attributePairCollectionBuilder;
+    private $collectionBuilder;
 
     public function __construct(
         OperatorToFunction $operatorToFunction,
         ExpressionBuilder $expressionBuilder,
-        AttributePairCollectionBuilder $attributePairCollectionBuilder
+        CollectionBuilder $collectionBuilder
     )
     {
         $this->expressionBuilder = $expressionBuilder;
         $this->operatorToFunction = $operatorToFunction;
-        $this->attributePairCollectionBuilder = $attributePairCollectionBuilder;
+        $this->collectionBuilder = $collectionBuilder;
     }
 
-    public function convert(string $expression)
+    public function convert(string $expressionText)
     {
-        $collection = $this->attributePairCollectionBuilder->build();
+        $this->collectionBuilder->build();
 
-        $expression = $this->expressionBuilder->build($expression,
+        $attributes = $this->collectionBuilder->getAttributes();
+
+        $expression = $this->expressionBuilder->build($expressionText,
             $this->operatorToFunction->getExpressionFunctionNames(),
-            $collection->getExpressionAttributeNames());
+            $attributes->getExpressionAttributeNames());
 
         return $expression->getNodes();
     }

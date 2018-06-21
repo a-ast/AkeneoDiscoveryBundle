@@ -2,7 +2,7 @@
 
 namespace Aa\Bundle\AkeneoQueryBundle\Attribute;
 
-class PimAttribute
+class Attribute
 {
     private $name;
 
@@ -48,12 +48,8 @@ class PimAttribute
         return $this->operators;
     }
 
-    public function getExpressionAttributes()
+    public function getExpressionOperators(): array
     {
-        $attributes[] = $this->getName();
 
-        if ($this->isLocalizable()) {
-            $attributes[] = $this->getName() . 'locale';
-        }
     }
 }

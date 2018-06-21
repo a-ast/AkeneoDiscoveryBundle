@@ -56,6 +56,8 @@ class AstToFiltersConverter
                 return null;
             }
 
+            // @todo: parse field and add context?
+
             $filters[] = $this->filterFactory->create($field, $value, $visitor->getOperator(), '');
         }
     }

@@ -28,13 +28,15 @@ class QueryProductCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $textToAstConverter = $this->getContainer()->get('aa_discovery.query.expression_to_ast_converter');
-        $astToFiltersConverter = $this->getContainer()->get('aa_discovery.query.ast_to_filters_converter');
+        $textToAstConverter = $this->getContainer()->get('aa_query.query.expression_to_ast_converter');
+        $astToFiltersConverter = $this->getContainer()->get('aa_query.query.ast_to_filters_converter');
 
         $expression = $input->getArgument('expression');
 
         $astNode = $textToAstConverter->convert($expression);
         $filters = $astToFiltersConverter->convert($astNode);
+
+        // @todo: convert filters to PIM entities again
 
         foreach ($filters as $filter) {
             $output->writeln((string)$filter);

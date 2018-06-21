@@ -2,7 +2,7 @@
 
 namespace Aa\Bundle\AkeneoQueryBundle\QueryFilter;
 
-use Aa\Bundle\AkeneoQueryBundle\Attribute\PimAttribute;
+use Aa\Bundle\AkeneoQueryBundle\Attribute\Attribute;
 use Pim\Component\Catalog\Model\AttributeInterface;
 use Pim\Component\Catalog\Query\Filter\FilterRegistryInterface;
 use Pim\Component\Catalog\Repository\AttributeRepositoryInterface;
@@ -81,7 +81,7 @@ class AttributeOperatorMap
         if (array_key_exists($attribute->getType(), $attributeTypeFilters)) {
             foreach ($attributeTypeFilters[$attribute->getType()] as $filter) {
 
-                $newEntries[] = new PimAttribute(
+                $newEntries[] = new Attribute(
                     $attribute->getCode(),
                     $attribute->isLocalizable(),
                     $attribute->isScopable(),
@@ -97,7 +97,7 @@ class AttributeOperatorMap
             foreach ($this->filterRegistry->getAttributeFilters() as $filter) {
                 if ($filter->supportsAttribute($attribute)) {
 
-                    $newEntries[] = new PimAttribute(
+                    $newEntries[] = new Attribute(
                         $attribute->getCode(),
                         $attribute->isLocalizable(),
                         $attribute->isScopable(),

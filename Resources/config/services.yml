@@ -1,52 +1,48 @@
 services:
 
     # deprecated
-    aa_discovery.query.attribute_operator_map:
+    aa_query.query.attribute_operator_map:
         class: Aa\Bundle\AkeneoQueryBundle\QueryFilter\AttributeOperatorMap
         arguments:
             - '@pim_catalog.query.filter.product_registry'
             - '@pim_catalog.repository.attribute'
 
     # deprecated
-    aa_discovery.query.operator_to_function:
+    aa_query.query.operator_to_function:
         class: Aa\Bundle\AkeneoQueryBundle\QueryFilter\OperatorToFunction
         arguments:
-            - '@aa_discovery.query.attribute_operator_map'
+            - '@aa_query.query.attribute_operator_map'
 
-    aa_discovery.query.filter_factory:
+    aa_query.query.filter_factory:
         class: Aa\Bundle\AkeneoQueryBundle\Filter\FilterFactory
         arguments:
-            - '@aa_discovery.query.operator_to_function'
+            - '@aa_query.query.operator_to_function'
 
-    aa_discovery.query.expression_builder:
+    aa_query.query.expression_builder:
         class: Aa\Bundle\AkeneoQueryBundle\QueryFilter\ExpressionBuilder
 
-    aa_discovery.query.expression_to_ast_converter:
+    aa_query.query.expression_to_ast_converter:
         class: Aa\Bundle\AkeneoQueryBundle\QueryFilter\ExpressionToAstConverter
         arguments:
-            - '@aa_discovery.query.operator_to_function'
-            - '@aa_discovery.query.expression_builder'
+            - '@aa_query.query.operator_to_function'
+            - '@aa_query.query.expression_builder'
             - '@aa_query.attribute.collection_builder'
 
-    aa_discovery.query.node_visitor.factory:
+    aa_query.query.node_visitor.factory:
         class: Aa\Bundle\AkeneoQueryBundle\QueryFilter\NodeVisitor\NodeVisitorFactory
 
-    aa_discovery.query.ast_to_filters_converter:
+    aa_query.query.ast_to_filters_converter:
         class: Aa\Bundle\AkeneoQueryBundle\QueryFilter\AstToFiltersConverter
         arguments:
-           - '@aa_discovery.query.node_visitor.factory'
-           - '@aa_discovery.query.filter_factory'
+           - '@aa_query.query.node_visitor.factory'
+           - '@aa_query.query.filter_factory'
 
-    aa_discovery.attribute.pim_attribute_factory:
-        class: Aa\Bundle\AkeneoQueryBundle\Attribute\PimAttributeFactory
-
-    aa_discovery.attribute.expression_attribute_factory:
-        class: Aa\Bundle\AkeneoQueryBundle\Attribute\ExpressionAttributeFactory
+    aa_query.attribute.factory:
+        class: Aa\Bundle\AkeneoQueryBundle\Attribute\AttributeFactory
 
     aa_query.attribute.collection_builder:
-        class: Aa\Bundle\AkeneoQueryBundle\Attribute\AttributePairCollectionBuilder
+        class: Aa\Bundle\AkeneoQueryBundle\Attribute\CollectionBuilder
         arguments:
             - '@pim_catalog.query.filter.product_registry'
             - '@pim_catalog.repository.attribute'
-            - '@aa_discovery.attribute.pim_attribute_factory'
-            - '@aa_discovery.attribute.expression_attribute_factory'
+            - '@aa_query.attribute.factory'
