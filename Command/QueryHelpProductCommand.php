@@ -30,15 +30,17 @@ class QueryHelpProductCommand extends ContainerAwareCommand
         $operators = $collectionBuilder->getOperators();
 
         $table = new Table($output);
-        $table->setHeaders(['Attribute', 'Functions']);
+        $table->setHeaders(['Attribute', 'Operators', 'Functions']);
 
         foreach ($attributes as $attribute) {
 
             $attributeOperators = $attribute->getOperators();
+            $expressionOperators = $operators->getExpressionOperators($attributeOperators);
             $expressionFunctions = $operators->getExpressionFunctions($attributeOperators);
 
             $table->addRow([
                 $attribute->getName(),
+                join(PHP_EOL, $expressionOperators),
                 join(PHP_EOL, $expressionFunctions),
             ]);
         }
