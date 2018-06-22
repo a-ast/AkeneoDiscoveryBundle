@@ -23,18 +23,23 @@ class QueryHelpProductCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getContainer()->get('aa_query.attribute.collection_builder')->build();
+        $collectionBuilder = $this->getContainer()->get('aa_query.attribute.collection_builder');
+        $collectionBuilder->build();
 
-        $attributeCollection = $this->getContainer()->get('aa_query.attribute.collection');
-        $attributes = $attributeCollection->getAttributes();
+        $attributes = $collectionBuilder->getAttributes()->getAttributes();
+        $operators = $collectionBuilder->getOperators();
 
         $table = new Table($output);
-        $table->setHeaders(['Attribute', 'Operators']);
+        $table->setHeaders(['Attribute', 'Functions']);
 
         foreach ($attributes as $attribute) {
+
+            $attributeOperators = $attribute->getOperators();
+            $expressionFunctions = $operators->getExpressionFunctions($attributeOperators);
+
             $table->addRow([
                 $attribute->getName(),
-                join(PHP_EOL, $attribute->getOperators()),
+                join(PHP_EOL, $expressionFunctions),
             ]);
         }
 

@@ -47,9 +47,4 @@ class Attribute
     {
         return $this->operators;
     }
-
-    public function getExpressionOperators(): array
-    {
-
-    }
 }

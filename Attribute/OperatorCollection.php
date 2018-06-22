@@ -39,24 +39,35 @@ class OperatorCollection
         $this->operators[] = $operator;
     }
 
-    public function getExpressionFunctions(): array
+    public function getExpressionFunctions(array $operators = []): array
     {
-        $functionNames = [];
-
-        foreach ($this->operators as $item) {
-            if (isset($this->pimToExpressionOperatorMap[$item])) {
-                continue;
-            }
-
-            $functionNames[] = str_replace(' ', '_', strtolower($item));
+        if (0 === count($operators)) {
+            $operators = $this->operators;
         }
+
+        $operators = array_diff($operators, array_keys($this->pimToExpressionOperatorMap));
+
+        $functionNames = array_map(function($item) {
+            return str_replace(' ', '_', strtolower($item));
+        }, $operators);
 
         return $functionNames;
     }
 
-    public function getExpressionOperators(): array
+    public function getExpressionOperators(array $operators = []): array
     {
-        return array_values($this->operators);
+        if (0 === count($operators)) {
+            $operators = $this->operators;
+        }
+
+        $expressionOperators = array_filter($this->pimToExpressionOperatorMap,
+            function($key) use ($operators) {
+                return in_array($key, $operators);
+            },
+            ARRAY_FILTER_USE_KEY
+        );
+
+        return array_values($expressionOperators);
     }
 
     public function getOperatorByExpressionOperator(string $expressionOperator): string
