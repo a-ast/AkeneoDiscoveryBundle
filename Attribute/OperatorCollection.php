@@ -9,18 +9,18 @@ class OperatorCollection
     /**
      * @var array
      */
-    private $supportedOperators;
+    private $pimToExpressionOperatorMap;
 
     /**
      * @var array
      */
-    private $items = [];
+    private $operators = [];
 
     public function __construct()
     {
-        $this->supportedOperators = [
+        $this->pimToExpressionOperatorMap = [
             Operators::EQUALS => '==',
-            Operators::NOT_EQUAL => Operators::NOT_EQUAL,
+            Operators::NOT_EQUAL => '!=',
             Operators::LOWER_THAN => Operators::LOWER_THAN,
             Operators::LOWER_OR_EQUAL_THAN => Operators::LOWER_OR_EQUAL_THAN,
             Operators::GREATER_THAN => Operators::GREATER_THAN,
@@ -32,47 +32,49 @@ class OperatorCollection
 
     public function add(string $operator)
     {
-        if (in_array($operator, $this->items)) {
+        if (in_array($operator, $this->operators)) {
             return;
         }
 
-        $this->items[] = $operator;
+        $this->operators[] = $operator;
     }
 
-    public function getExpressionFunctionNames(): array
+    public function getExpressionFunctions(): array
     {
-        //return array_values($this->functionNames);
-    }
+        $functionNames = [];
 
-    public function getPimOperator(string $expressionOperator): string
-    {
-        $functionOperator = array_search($expressionOperator, $this->functionNames);
+        foreach ($this->operators as $item) {
+            if (isset($this->pimToExpressionOperatorMap[$item])) {
+                continue;
+            }
 
-        if (false !== $functionOperator) {
-            return $functionOperator;
+            $functionNames[] = str_replace(' ', '_', strtolower($item));
         }
 
-        $operator = array_search($expressionOperator, $this->supportedOperators);
-
-        if (false !== $operator) {
-            return $operator;
-        }
-
-        throw new \Exception(sprintf('Unknown operator %s', $expressionOperator));
+        return $functionNames;
     }
 
-//    private function initialize()
-//    {
-//
-//
-//        $this->functionNames = [];
-//
-//        foreach ($this->attributeOperatorMap->getOperators() as $operatorName) {
-//            if (isset($this->supportedOperarors[$operatorName])) {
-//                continue;
-//            }
-//
-//            $this->functionNames[$operatorName] = str_replace(' ', '_', strtolower($operatorName));
-//        }
-//    }
+    public function getExpressionOperators(): array
+    {
+        return array_values($this->operators);
+    }
+
+    public function getOperatorByExpressionOperator(string $expressionOperator): string
+    {
+        $key = array_search($expressionOperator, $this->pimToExpressionOperatorMap);
+
+        if (false !== $key) {
+            return $key;
+        }
+
+        $operator = str_replace('_', ' ', strtoupper($expressionOperator));
+
+        $key = array_search($operator, $this->pimToExpressionOperatorMap);
+
+        if (false !== $key) {
+            return $this->operators[$key];
+        }
+
+        throw new \Exception('Unknown operator '.$operator);
+    }
 }

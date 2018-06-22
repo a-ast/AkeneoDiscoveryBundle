@@ -4,13 +4,13 @@ namespace spec\Aa\Bundle\AkeneoQueryBundle\Filter;
 
 use Aa\Bundle\AkeneoQueryBundle\Filter\Filter;
 use Aa\Bundle\AkeneoQueryBundle\Filter\FilterFactory;
-use Aa\Bundle\AkeneoQueryBundle\QueryFilter\OperatorToFunction;
+use Aa\Bundle\AkeneoQueryBundle\QueryFilter\CollectionBuilder;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 class FilterFactorySpec extends ObjectBehavior
 {
-    function let(OperatorToFunction $operatorToFunction)
+    function let(CollectionBuilder $operatorToFunction)
     {
         $this->beConstructedWith($operatorToFunction);
         $operatorToFunction->getPimOperator('==')->willReturn('=');

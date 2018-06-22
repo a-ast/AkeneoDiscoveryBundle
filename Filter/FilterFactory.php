@@ -2,23 +2,25 @@
 
 namespace Aa\Bundle\AkeneoQueryBundle\Filter;
 
-use Aa\Bundle\AkeneoQueryBundle\QueryFilter\OperatorToFunction;
+use Aa\Bundle\AkeneoQueryBundle\Attribute\CollectionBuilder;
 
 class FilterFactory
 {
     /**
-     * @var OperatorToFunction
+     * @var CollectionBuilder
      */
-    private $operatorToFunction;
+    private $collectionBuilder;
 
-    public function __construct(OperatorToFunction $operatorToFunction)
+    public function __construct(CollectionBuilder $collectionBuilder)
     {
-        $this->operatorToFunction = $operatorToFunction;
+        $this->collectionBuilder = $collectionBuilder;
     }
 
     public function create(string $field, string $value, string $operator, string $context)
     {
-        $pimOperator = $this->operatorToFunction->getPimOperator($operator);
+        $operators = $this->collectionBuilder->getOperators();
+
+        $pimOperator = $operators->getOperatorByExpressionOperator($operator);
 
         return new Filter($field, $value, $pimOperator, $context);
     }

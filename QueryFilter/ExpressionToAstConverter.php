@@ -12,23 +12,16 @@ class ExpressionToAstConverter
     private $expressionBuilder;
 
     /**
-     * @var OperatorToFunction
-     */
-    private $operatorToFunction;
-
-    /**
      * @var CollectionBuilder
      */
     private $collectionBuilder;
 
     public function __construct(
-        OperatorToFunction $operatorToFunction,
         ExpressionBuilder $expressionBuilder,
         CollectionBuilder $collectionBuilder
     )
     {
         $this->expressionBuilder = $expressionBuilder;
-        $this->operatorToFunction = $operatorToFunction;
         $this->collectionBuilder = $collectionBuilder;
     }
 
@@ -37,9 +30,10 @@ class ExpressionToAstConverter
         $this->collectionBuilder->build();
 
         $attributes = $this->collectionBuilder->getAttributes();
+        $operators = $this->collectionBuilder->getOperators();
 
         $expression = $this->expressionBuilder->build($expressionText,
-            $this->operatorToFunction->getExpressionFunctionNames(),
+            $operators->getExpressionFunctions(),
             $attributes->getExpressionAttributeNames());
 
         return $expression->getNodes();
