@@ -80,12 +80,10 @@ class OperatorCollection
 
         $operator = str_replace('_', ' ', strtoupper($expressionOperator));
 
-        $key = array_search($operator, $this->pimToExpressionOperatorMap);
-
-        if (false !== $key) {
-            return $this->operators[$key];
+        if (!in_array($operator, $this->operators)) {
+            throw new \Exception('Unknown operator '.$operator);
         }
 
-        throw new \Exception('Unknown operator '.$operator);
+        return $operator;
     }
 }
